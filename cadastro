@@ -1,0 +1,23 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct  {
+
+	char nome[30];
+    int cpf[11];
+    int rg[9];
+
+}Cadastro;
+
+int main() {
+
+
+    Cadastro *pessoa;
+	pessoa = (Cadastro *)malloc(sizeof(Cadastro));
+
+	
+
+
+
+	free(pessoa);
+}
