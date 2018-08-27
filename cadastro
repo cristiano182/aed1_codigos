@@ -1,23 +1,103 @@
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 
-typedef struct  {
 
-	char nome[30];
-    int cpf[11];
-    int rg[9];
+void escreverArquivo();
+void lerArquivo();
 
-}Cadastro;
+struct cadastro { char nome[30]; char cpf[11]; };
+
+typedef struct cadastro PESSOA;
 
 int main() {
 
-
-    Cadastro *pessoa;
-	pessoa = (Cadastro *)malloc(sizeof(Cadastro));
-
-	
+int i,tam;
+PESSOA *ponteiroPessoa;
 
 
+printf("Digite o tamanho do vetor para alocação: \n");
+scanf("%d", &tam);
 
-	free(pessoa);
+ponteiroPessoa = (PESSOA *)malloc(tam*sizeof(PESSOA));
+
+for(i=0; i<tam; i++)
+{
+      printf("Insira o Nome: \n");
+      getchar();
+      gets(ponteiroPessoa[i].nome);
+
+      printf("Insira o CPF com 11 Digitos: \n");
+      getchar();
+      gets(ponteiroPessoa[i].cpf);
 }
+
+
+//escreverArquivo(ponteiroPessoa);
+
+lerArquivo(ponteiroPessoa);
+
+/*
+for(i=0; i<tam; i++)
+{
+     printf("Nome: %s - CPF: %s \n", ponteiroPessoa[i].nome,ponteiroPessoa[i].cpf);
+}
+*/
+
+
+free(ponteiroPessoa);
+
+return 0;
+
+}
+
+
+
+
+void escreverArquivo(PESSOA ponteiroPessoa[])
+{
+FILE *arq;
+
+arq = fopen("arquivo.txt","w");
+
+if (arq==NULL) {
+
+printf("Erro na criação do arquivo");
+getchar();
+
+}
+else {
+
+for(int i =0; i<2; i++)
+{
+
+fputs(ponteiroPessoa[i].cpf,arq);
+fputs(ponteiroPessoa[i].nome,arq);
+
+}
+
+fclose(arq);
+
+
+}
+
+}
+
+void lerArquivo(PESSOA ponteiroPessoa[])
+{
+
+FILE *arq;
+
+arq = fopen("arquivo.txt","r");
+
+fgets(ponteiroPessoa,100,arq);
+
+
+fclose(arq);
+
+
+}
+
+
+
+
+
