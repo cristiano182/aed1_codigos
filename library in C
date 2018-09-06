@@ -1,0 +1,38 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include "matematica.h"
+
+
+
+int main ()
+{
+
+
+long int numero = Fatorial(33);
+
+
+printf("%d",numero);
+
+
+
+
+
+
+return 0;
+
+}
+
+// ARQUIVO #INCLUDE " MATEMATICA.H "
+/*
+long int Fatorial( int entrada ) {
+
+int cont;
+long int resultado;
+resultado = 1;
+for( cont = 2; cont <= entrada; cont++ )
+{
+resultado *= cont;
+}
+return resultado;
+}
+*/
