@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+
+ int **pm;
+
+
+
+ ////////////
+
+    pm = (int **)malloc(3 * sizeof(sizeof(int *)));
+
+    for( int n = 0; n<3; n++)
+    {
+        pm[n] = (int *)malloc(3 * sizeof(int));
+    }
+
+
+
+    //////
+
+    for(int i=0; i<3; i++)
+    {
+        for(int j=0; j<3; j++)
+        {
+            pm[i][j] = i+j;
+
+        }
+
+    }
+
+
+    //////////
+
+    for(int i =0; i<3; i++)
+    {
+        for(int j =0; j<3; j++)
+        {
+
+        printf(" %d ",pm[i][j]);
+        }
+    printf("\n");
+    }
+
+////////////
+
+
+
+    pm = (int **)realloc(6 * sizeof(sizeof(int *)));
+
+    for( int n = 0; n<6; n++)
+    {
+        pm[n] = (int *)realloc(6 * sizeof(int));
+    }
+
+
+
+
+
+// LIBERANDO ESPAÇO
+
+for(int i =0; i<3; i++)
+{
+    free(pm[i]);
+}
+
+
+free(pm);
+
+
+
+
+
+    return 0;
+}
