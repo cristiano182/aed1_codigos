@@ -1,0 +1,337 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+typedef  struct {
+    char nome[30];
+    int idade;
+}CLIENTE;
+
+typedef struct {
+    CLIENTE vetor[100];
+    int nElem;
+}LISTA;
+
+
+
+void criarLista(LISTA *lista)
+{
+    lista->nElem = 0;
+}
+
+void inserirFinal(LISTA *lista, CLIENTE cl)
+{
+    lista->vetor[lista->nElem] = cl;
+    lista->nElem += 1;
+}
+
+void inserirPosicao(LISTA *lista, int pos, CLIENTE cl)
+{
+    int i;
+
+
+    if( pos >  lista->nElem) {
+        inserirFinal(lista, cl);
+    }
+    else {
+        for(i = lista->nElem; i > pos; i--){
+
+            lista->vetor[i] = lista->vetor[i-1];
+
+        }
+        lista->vetor[pos] = cl;
+        lista->nElem += 1;
+
+    }
+}
+
+void inserirInicio(LISTA *lista, CLIENTE cl)
+{
+    inserirPosicao(lista, 0 , cl);
+}
+
+
+
+CLIENTE * acessarAPartirInicio(LISTA *lista, int pos)
+{
+
+    if( pos < lista->nElem )
+
+        return &lista->vetor[pos];
+    else
+        return NULL; //nao encontrou
+
+}
+
+CLIENTE * acessarAPartirFim(LISTA  * lista, int pos)
+{
+
+    if( pos < lista->nElem )
+
+        return &lista->vetor[lista->nElem-pos-1];
+    else
+        return NULL; //nao encontrou
+
+}
+
+void listaInicioAoFim(LISTA *lista)
+{
+    int i;
+    CLIENTE cl;
+    for(i=0; i < lista->nElem; i++)
+    {
+
+        cl = lista->vetor[i];
+        printf("nome: %s\n", cl.nome);
+        printf("idade: %d\n\n", cl.idade);
+    }
+}
+
+void listaFimAoInicio(LISTA *lista)
+{
+    int i;
+    CLIENTE cl;
+    for(i = lista->nElem-1; i >= 0; i--)
+    {
+
+        cl = lista->vetor[i];
+        printf("nome: %s\n", cl.nome);
+        printf("idade: %d\n\n", cl.idade);
+    }
+}
+
+void eliminarPosicao(LISTA *lista, int pos)
+{
+    int i;
+
+    if(pos < lista->nElem)
+    {
+    if(pos == (lista->nElem-1))
+    {
+
+        lista->nElem = lista->nElem - 1;
+    }
+
+    else{
+
+
+        for(i =pos; i<lista->nElem-1; i++)
+        {
+            lista->vetor[i] = lista->vetor[i+1];
+        }
+
+        lista->nElem = lista->nElem - 1;
+    }
+    }
+  
+}
+
+int tamanho(LISTA lista )
+{
+
+
+    return lista.nElem;
+}
+
+void destruir (LISTA *lista)
+{
+    lista->nElem = 0 ;
+    
+}
+
+
+
+CLIENTE * buscarEnderecoNome(char nome[], LISTA *lista)
+{
+    int i;
+    for(i=0; i < lista->nElem; i++)
+    {
+
+        if(  strcmp(nome, lista->vetor[i].nome) == 0  )
+            return &lista->vetor[i];
+    }
+
+    return NULL;
+}   
+
+
+
+
+int  buscarPosicaoNome(char nome[], LISTA *lista)
+{
+    int i;
+    for(i=0; i < lista->nElem; i++)
+    {
+
+        if(  strcmp(nome, lista->vetor[i].nome) == 0  )
+            return i;
+    }
+
+    return -1;
+}  
+
+
+
+
+
+
+
+
+int main()
+{
+int op = 0;
+int pos;
+char nome[30];
+LISTA lista;
+CLIENTE cl;
+CLIENTE *cp;
+
+    do{
+
+        printf("1 - criar lista\n");
+        printf("2 - inserir inicio\n");
+        printf("3 - inserir final\n");
+        printf("4 - inserir posicao\n");
+        printf("5 - acessar a partir  inicio\n");
+        printf("6 - acessar a partir fim\n");
+        printf("7 - listar do inicio ao fim\n");
+        printf("8 - listar do fim ao inicio\n");
+        printf("9 - eliminar \n");
+        printf("10 - buscar nome retorna endereco\n");
+        printf("11 - buscar nome retorna posicao\n");
+        printf("12 - tamanho da lista\n");
+        printf("13 - destruir\n");
+        printf("14 - sair\n");
+        printf("opcao: ");
+        scanf("%d", &op);
+        switch( op ){
+            
+            case 1:
+                criarLista(&lista);
+                break;
+
+
+                case 2:
+                printf("nome : ");
+                scanf("%s", cl.nome);
+                printf("idade : ");
+                scanf("%d", &cl.idade);
+
+                inserirInicio(&lista, cl);
+                break;
+
+                  case 3:
+                printf("nome : ");
+                scanf("%s", cl.nome);
+                printf("idade : ");
+                scanf("%d", &cl.idade);
+
+                inserirFinal(&lista, cl);
+                break;
+
+                    case 4:
+                printf("nome : ");
+                scanf("%s", cl.nome);
+                printf("idade : ");
+                scanf("%d", &cl.idade);
+                printf("posicao: ");
+                scanf("%d", &pos);
+                inserirPosicao(&lista, pos, cl);
+                break;
+
+                case 5:
+                printf("posicao: \n");
+                scanf("%d", &pos);
+                cp = acessarAPartirInicio(&lista , pos);
+                if( cp != NULL){
+
+                
+                printf("nome : %s \n", cp->nome );      
+                printf("idade :%d \n",  cp->idade);
+                }
+                else
+                {
+
+                    printf("posicao nao existe\n");
+                }
+                break;
+
+              case 6:
+                printf("posicao: \n");
+                scanf("%d", &pos);
+                cp = acessarAPartirFim(&lista , pos);
+                if( cp != NULL){
+
+                
+                printf("nome : %s \n", cp->nome );      
+                printf("idade :%d \n",  cp->idade);
+                }
+                else
+                {
+
+                    printf("posicao nao existe\n");
+                }
+                break;
+
+              case 7:
+                listaInicioAoFim(&lista);
+                break;
+                case 8:
+                listaFimAoInicio(&lista);
+                break;
+            
+                case 9:
+                printf("posicao: \n");
+                scanf("%d", &pos);
+                eliminarPosicao(&lista ,pos);
+                break;
+                case 10:
+                  printf("nome: \n");
+                scanf("%s", nome);
+                cp = buscarEnderecoNome(nome, &lista);
+                   if( cp != NULL){
+
+                
+                printf("nome : %s \n", cp->nome );      
+                printf("idade :%d \n",  cp->idade);
+                }
+                else{
+                    printf("nao existe\n");
+                }
+                break;
+                case 11:
+                 printf("nome: \n");
+                scanf("%s", nome);
+                pos = buscarPosicaoNome(nome, &lista);
+                   if( pos >= 0 ){
+
+                        printf("posicao: %d\n", pos);
+                        cp = acessarAPartirInicio(&lista, pos);
+                printf("nome : %s \n", cp->nome );      
+                printf("idade :%d \n",  cp->idade);
+                }
+                else{
+                    printf("nao existe\n");
+                }
+                break;
+
+                case 12:
+                printf("tamanho: %d", tamanho(lista));
+                break;
+
+                case 13:
+                destruir(&lista);
+                break;
+                case 14:
+                destruir(&lista);
+                break;
+
+        }
+
+
+
+    }while (op != 14);
+
+    return 0;
+}
