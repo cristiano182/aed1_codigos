@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct ponto{
+
+int x,y;
+
+struct ponto *proximo;
+
+}t_ponto;
+
+
+
+
+
+int main()
+{
+
+int resp;
+t_ponto * first_position;
+t_ponto * next_ponto;
+
+
+first_position = (t_ponto*)malloc(sizeof(t_ponto));
+
+
+if(first_position == NULL)
+exit(1);
+
+next_ponto = first_position;
+
+while(1)
+{
+    printf("Digite x: \n");
+    scanf("%d", &next_ponto->x);
+
+    printf("Digite y: \n");
+    scanf("%d", &next_ponto->y);
+
+    printf("Deseja continuar? <1> SIM <outro valor> NAO: \n");
+    scanf("%d", &resp);
+
+    if(resp ==1 )
+    {
+        next_ponto->proximo = (t_ponto *)malloc(sizeof(t_ponto));
+
+        next_ponto = next_ponto->proximo;
+    }
+    else
+    break;
+}
+
+
+    next_ponto->proximo = NULL;
+    next_ponto = first_position;
+
+    while(next_ponto != NULL)
+    {
+
+        printf("x: %d, y: %d\n", next_ponto->x, next_ponto->y);
+        next_ponto = next_ponto->proximo;
+    }
+
+    return 0;
+}
