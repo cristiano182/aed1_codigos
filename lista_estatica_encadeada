@@ -1,0 +1,72 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Lista
+{
+
+int elemento;
+
+struct Lista *prox;
+
+}celula;
+
+
+void insertInicio(celula **topo, int elemento) {
+
+
+celula *novo;
+novo = malloc(sizeof(celula));
+
+novo->elemento = elemento;
+
+    if(*topo == NULL) {
+
+    novo->prox = NULL;
+    *topo = novo;
+
+    }
+    else {
+
+        novo->prox = *topo;
+        *topo = novo;
+
+    }
+
+}
+
+void printar(celula *topo)
+{
+
+celula *aux;
+aux = topo;
+
+if(aux == NULL){
+
+}
+else{
+do{
+
+printf("%d->\n", aux->elemento);
+aux = aux->prox;
+
+
+}while(aux != NULL);
+}
+
+}
+
+
+
+int main()
+{
+celula *topo = NULL;
+
+insertInicio(&topo, 3);
+insertInicio(&topo, 5);
+insertInicio(&topo, 4);
+insertInicio(&topo, 9);
+printar(topo);
+
+
+    return 0;
+}
