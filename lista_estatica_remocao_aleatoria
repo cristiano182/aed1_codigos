@@ -1,0 +1,111 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define MAX 150
+
+typedef  struct {
+    int numero;
+}DADOS;
+
+typedef struct {
+    DADOS vetor[MAX];
+    int qntElemento;
+}LISTA;
+
+void remocaoEspecial(LISTA *lista)
+{
+    DADOS n1,aux;
+    int i,j;
+
+    scanf("%d", &n1.numero);
+
+
+  while(i < lista->qntElemento)
+  {
+
+      if(n1.numero == lista->vetor[i].numero)
+      {
+          j=i;
+
+          while(j < lista->qntElemento)
+          {
+
+              lista->vetor[j] = lista->vetor[j+1];
+              j++;
+          }
+            lista->qntElemento--;
+      }
+
+      i++;
+  }
+
+
+
+
+
+    for(i=0; i<lista->qntElemento; i++) {
+    printf("%d ",lista->vetor[i].numero);
+}
+
+
+}
+
+void inserirFinal(LISTA *lista)
+{
+
+  int i=0,j=0,aux=0;
+  DADOS n1;
+
+  for(j=0; j<MAX; j++) {
+  scanf("%d", &n1.numero);
+
+
+
+                                        while (i < lista->qntElemento)
+                                       {
+                                            if(n1.numero != lista->vetor[i].numero)
+                                            {
+                                                    aux++;
+                                            }
+
+
+                                            i++;
+
+                                        }
+
+
+
+
+                                            if(aux  == lista->qntElemento)
+                                            {
+
+
+                                                lista->vetor[lista->qntElemento] = n1;
+                                                lista->qntElemento++;
+
+
+                                            }
+
+                                            i=0;
+                                            aux=0;
+
+
+
+
+}
+
+
+
+}
+
+int main()
+{
+
+LISTA lista;
+lista.qntElemento = 0;
+inserirFinal(&lista);
+remocaoEspecial(&lista);
+
+return 0;
+}
+
