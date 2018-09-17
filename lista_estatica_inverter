@@ -1,0 +1,82 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define MAX 150
+
+typedef  struct {
+    int numero;
+}DADOS;
+
+typedef struct {
+    DADOS vetor[MAX];
+    int qntElemento;
+}LISTA;
+
+
+void inserir(LISTA *lista, int valor)
+{
+    DADOS n1;
+    n1.numero = valor;
+
+    if(lista->qntElemento < MAX)
+    {
+    lista->vetor[lista->qntElemento] = n1;
+    lista->qntElemento++;
+    }
+
+
+
+
+}
+
+void inverte(LISTA *lista)
+{
+
+    LISTA lista2;
+    int i=lista->qntElemento-1,j;
+    lista2.qntElemento = 0;
+
+
+    for(j=0; j<lista->qntElemento; j++){
+
+    lista2.vetor[j] = lista->vetor[i];
+    i--;
+
+    }
+
+    for(j=0; j<lista->qntElemento; j++)
+    {
+
+        lista->vetor[j] = lista2.vetor[j];
+
+    }
+
+
+
+for(i=0; i<lista->qntElemento; i++) {
+
+printf("%d ", lista->vetor[i].numero);
+
+  }
+
+
+}
+int main()
+{
+
+LISTA lista;
+int valor,i;
+char c;
+lista.qntElemento = 0;
+
+while(c != '\n')
+{
+    scanf("%d%c",&valor,&c);
+    inserir(&lista, valor);
+}
+inverte(&lista);
+
+
+
+return 0;
+}
