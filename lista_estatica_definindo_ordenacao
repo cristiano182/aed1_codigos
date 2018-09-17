@@ -1,0 +1,93 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define MAX 150
+
+typedef  struct {
+    int numero;
+}DADOS;
+
+typedef struct {
+    DADOS vetor[MAX];
+    int qntElemento;
+}LISTA;
+
+
+void inserir(LISTA *lista, int valor)
+{
+    DADOS n1;
+    n1.numero = valor;
+
+    if(lista->qntElemento < MAX)
+    {
+    lista->vetor[lista->qntElemento] = n1;
+    lista->qntElemento++;
+    }
+
+
+
+
+}
+
+void analisar(LISTA *lista)
+{
+
+int i=0;
+int aux1=0,aux2 =0;
+
+
+
+while(i <lista->qntElemento-1)
+{
+
+
+    if(lista->vetor[i].numero < lista->vetor[i+1].numero)
+    {
+       aux1++;
+
+    }
+
+    if(lista->vetor[i].numero > lista->vetor[i+1].numero)
+    {
+
+        aux2++;
+    }
+
+i++;
+}
+
+
+if(aux1 == lista->qntElemento-1)
+    printf("crescente\n");
+
+if(aux2 == lista->qntElemento-1)
+    printf("decrescente\n");
+
+if(aux1 != lista->qntElemento-1 && aux2 != lista->qntElemento-1)
+    printf("desordenada\n");
+
+
+
+}
+int main()
+{
+
+LISTA lista;
+int valor,i;
+char c;
+lista.qntElemento = 0;
+
+while(c != '\n')
+{
+    scanf("%d%c",&valor,&c);
+    inserir(&lista, valor);
+}
+analisar(&lista);
+
+
+
+return 0;
+}
+
+
+
