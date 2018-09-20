@@ -1,9 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-
-
 typedef struct no {
 
 int num;
@@ -20,6 +17,26 @@ No* criar_no()
 }
 
 
+No* inserir_inicio(No *lista, int dado)
+{
+     No *no = criar_no();
+    no->num = dado;
+
+     if(lista == NULL)
+    {
+        lista = no;
+        no->prox = NULL;
+
+    }
+    else
+    {
+        no->prox= lista;
+        lista = no;
+
+    }
+    return lista;
+
+}
 
 No* inserir_fim(No *lista, int dado)
 {
@@ -30,8 +47,9 @@ No* inserir_fim(No *lista, int dado)
     //SE A LISTA ESTIVE VAZIA
     if(lista == NULL)
     {
-        no->prox = NULL;
         lista = no;
+        no->prox = NULL;
+
     }
     //SE JA HOUVER ELEMENTOS NA LISTA
     else
@@ -61,8 +79,8 @@ void imprimir(No *lista)
 
     while(aux != NULL)
     {
-        printf(" %d ",aux->num);
-        aux= aux->prox;
+        printf("%d ",aux->num);
+        aux = aux->prox;
 
     }
 
@@ -72,11 +90,16 @@ void imprimir(No *lista)
 int main()
 {
 
-No* lista = NULL;
-lista = inserir_fim(lista,5);
-lista = inserir_fim(lista,4);
-lista = inserir_fim(lista,3);
-lista = inserir_fim(lista,2);
+No *lista = NULL;
+int valor;
+char c;
+
+while(c != '\n')
+{
+    scanf("%d%c", &valor,&c);
+    lista = inserir_inicio(lista,valor);
+
+}
 
 imprimir(lista);
 
