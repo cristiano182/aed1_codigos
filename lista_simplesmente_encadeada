@@ -1,0 +1,84 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+
+
+typedef struct no {
+
+int num;
+struct no *prox;
+
+}No;
+
+No* criar_no()
+{
+    No* no = (No*)malloc(sizeof(No));
+
+    return no;
+
+}
+
+
+
+No* inserir_fim(No *lista, int dado)
+{
+    No *no = criar_no();
+
+    no->num = dado;
+
+    //SE A LISTA ESTIVE VAZIA
+    if(lista == NULL)
+    {
+        no->prox = NULL;
+        lista = no;
+    }
+    //SE JA HOUVER ELEMENTOS NA LISTA
+    else
+    {
+        No* aux = lista;
+
+        while(aux->prox != NULL)
+        {
+            aux = aux->prox;
+
+        }
+        no->prox = NULL;
+        aux->prox = no;
+
+    }
+
+    return lista;
+
+
+
+}
+
+void imprimir(No *lista)
+{
+
+    No* aux = lista;
+
+    while(aux != NULL)
+    {
+        printf(" %d ",aux->num);
+        aux= aux->prox;
+
+    }
+
+
+}
+
+int main()
+{
+
+No* lista = NULL;
+lista = inserir_fim(lista,5);
+lista = inserir_fim(lista,4);
+lista = inserir_fim(lista,3);
+lista = inserir_fim(lista,2);
+
+imprimir(lista);
+
+    return 0;
+}
