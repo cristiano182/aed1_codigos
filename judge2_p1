@@ -1,0 +1,103 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct no {
+
+int num;
+struct no *prox;
+
+}No;
+
+No* criar_no()
+{
+    No* no = (No*)malloc(sizeof(No));
+
+    return no;
+
+}
+
+No* inserir(No *lista, int dado)
+{
+    No *no = criar_no();
+    no->num = dado;
+    No *aux = lista;
+    int i =0;
+
+
+     if(lista == NULL)
+    {
+        lista = no;
+        no->prox = NULL;
+
+
+    }
+
+
+    else {
+
+
+               while(aux->prox != NULL)
+                    {
+                        i = i + 1;
+                        aux = aux->prox;
+                    }
+
+
+                    if( i % 2 != 0 ) {
+                        no->prox= lista;
+                        lista = no;
+                    }
+
+                    if( i % 2 == 0) {
+
+
+                        while(aux->prox != NULL) {
+                            aux = aux->prox;
+                        }
+
+                        no->prox = NULL;
+                        aux->prox = no;
+
+                    }
+
+
+        }
+
+    return lista;
+
+}
+
+
+void imprimir(No *lista)
+{
+
+    No* aux = lista;
+
+    while(aux != NULL)
+    {
+        printf("%d ",aux->num);
+        aux = aux->prox;
+
+    }
+
+
+}
+
+int main()
+{
+
+No *lista = NULL;
+int valor;
+char c;
+
+while(c != '\n')
+{
+    scanf("%d%c",&valor,&c);
+    lista = inserir(lista,valor);
+
+}
+
+imprimir(lista);
+
+    return 0;
+}
