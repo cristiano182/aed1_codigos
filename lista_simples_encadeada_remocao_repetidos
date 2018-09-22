@@ -1,0 +1,124 @@
+        #include <stdio.h>
+        #include <stdlib.h>
+     
+        typedef struct no {
+     
+        int num;
+        struct no *prox;
+     
+        }No;
+     
+        No* criar_no()
+        {
+            No* no = (No*)malloc(sizeof(No));
+     
+            return no;
+     
+        }
+     
+        No* inserir(No *lista, int dado)
+        {
+            No *no = criar_no();
+            no->num = dado;
+     
+     
+     
+     
+             if(lista == NULL)
+            {
+                lista = no;
+                no->prox = NULL;
+     
+            }
+     
+     
+            else {
+                    No *aux = lista;
+     
+                    while(aux->prox != NULL) {
+                        aux = aux->prox;
+                                }
+     
+                                no->prox = NULL;
+                                aux->prox = no;
+     
+                            }
+     
+     
+     
+     
+            return lista;
+     
+        }
+        No *remocao(No *lista_ini)
+        {
+        No *lista_fim;
+        No *lista_ant;
+        int dado;
+     
+        scanf("%d", &dado);
+        if(lista_ini->num == dado)
+        {
+     
+            lista_ini = lista_ini->prox;
+     
+        }
+        else{
+     
+            lista_fim = lista_ini;
+     
+            while(lista_fim->num != dado && lista_fim->prox != NULL)
+            {
+             lista_ant = lista_fim;
+            lista_fim = lista_fim->prox;
+     
+            }
+     
+            if(lista_fim->num == dado)
+            {
+                lista_ant->prox = lista_fim->prox;
+     
+            }
+     
+     
+     
+     
+            }
+     
+     
+     
+        return lista_ini;
+     
+        }
+     
+        void imprimir(No *lista)
+        {
+     
+            No* aux = lista;
+     
+            while(aux != NULL)
+            {
+                printf("%d ",aux->num);
+                aux = aux->prox;
+     
+            }
+     
+     
+        }
+     
+        int main()
+        {
+        No *lista = NULL;
+        int valor;
+        char c;
+        while(c != '\n')
+        {
+            scanf("%d%c",&valor,&c);
+            lista = inserir(lista,valor);
+     
+        }
+        lista = remocao(lista);
+        imprimir(lista);
+     
+            return 0;
+        }
