@@ -1,0 +1,173 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Elemento
+{
+    int info;
+    struct Elemento *ant;
+    struct Elemento *prox;
+
+}elemento;
+
+typedef struct lista{
+
+elemento *primeiro;
+elemento *ultimo;
+int tamanhaoLista;
+
+}Lista;
+
+
+void iniciarLista(Lista *lista)
+{
+    lista->primeiro = NULL;
+    lista->ultimo = NULL;
+    lista->tamanhaoLista = 0;
+}
+
+void inserirFinal(Lista *lista)
+{
+    elemento *novo = (elemento*)malloc(sizeof(elemento));
+
+    scanf("%d", &novo->info);
+
+    if(lista->tamanhaoLista == 0)
+        {
+
+            novo->prox = NULL;
+            novo->ant = NULL;
+            lista->primeiro = novo;
+            lista->ultimo = novo;
+
+        }
+        else{
+
+                novo->prox = NULL;
+                novo->ant = lista->ultimo;
+                lista->ultimo->prox = novo;
+                lista->ultimo = novo;
+        }
+
+        lista->tamanhaoLista++;
+}
+void inserirInicio(Lista *lista)
+{
+    elemento *novo = (elemento*)malloc(sizeof(elemento));
+    scanf("%d", &novo->info);
+
+
+    if(lista->tamanhaoLista == 0)
+        {
+
+            novo->prox = NULL;
+            novo->ant = NULL;
+            lista->primeiro = novo;
+            lista->ultimo = novo;
+
+        }
+
+            else{
+               novo->ant = NULL;
+               novo->prox = lista->primeiro;
+               lista->primeiro->ant = novo;
+               lista->primeiro = novo;
+            }
+
+
+        lista->tamanhaoLista++;
+
+}
+void inserirMeio(Lista *lista)
+{
+     elemento *novo = (elemento*)malloc(sizeof(elemento));
+    scanf("%d", &novo->info);
+
+
+    if(lista->tamanhaoLista == 0)
+        {
+            novo->prox = NULL;
+            novo->ant = NULL;
+            lista->primeiro = novo;
+            lista->ultimo = novo;
+        }
+        else
+        {
+            novo->ant = lista->primeiro;
+            novo->prox = lista->primeiro->prox;
+            lista->primeiro->prox = novo;
+            lista->primeiro->prox->ant = novo;
+
+
+        }
+
+        lista->tamanhaoLista++;
+
+}
+
+void removePrimeiro(Lista *lista)
+{
+
+    lista->primeiro = lista->primeiro->prox;
+    lista->primeiro->ant = NULL;
+
+    lista->tamanhaoLista--;
+
+
+}
+
+void removeUltimo(Lista *lista)
+{
+
+    lista->ultimo = lista->ultimo->ant;
+    lista->ultimo->prox = NULL;
+
+
+    lista->tamanhaoLista--;
+}
+
+void removeMeio(Lista *lista)
+{
+
+    Lista *aux = lista;
+
+
+
+
+}
+
+
+void imprimeLista(Lista *lista)
+{
+
+    while(lista->primeiro != NULL)
+    {
+
+        printf("%d ", lista->primeiro->info);
+        lista->primeiro = lista->primeiro->prox;
+    }
+
+}
+
+int main()
+{
+    Lista lista;
+    iniciarLista(&lista);
+
+    inserirFinal(&lista);
+    inserirFinal(&lista);
+    inserirFinal(&lista);
+    inserirFinal(&lista);
+    inserirFinal(&lista);
+    inserirInicio(&lista);
+    inserirMeio(&lista);
+    removePrimeiro(&lista);
+    removeUltimo(&lista);
+     imprimeLista(&lista);
+
+     printf("\n %d ", lista.tamanhaoLista);
+
+
+
+
+    return 0;
+}
