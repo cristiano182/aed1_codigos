@@ -1,0 +1,297 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+
+typedef struct Elemento {
+
+    int ID;
+    int valor;
+    int chave;
+    int chaveAnterior;
+    struct Elemento *prox;
+}elemento;
+
+
+typedef struct lista{
+
+elemento *primeiro;
+elemento *ultimo;
+int tamanhoLista;
+
+}Lista;
+
+void inicializaLista(Lista *lista)
+{
+    lista->primeiro = NULL;
+    lista->ultimo = NULL;
+    lista->tamanhoLista = 0;
+
+}
+
+
+void inserir(Lista *lista)
+{
+
+    int avanca = 0;
+    elemento *novo = (elemento*)malloc(sizeof(elemento));
+    elemento *aux = lista->primeiro;
+    int id_atual;
+    int valor_atual;
+    novo->prox = NULL;
+
+    scanf("%d %d",&id_atual,&valor_atual);
+
+    novo->ID = id_atual;
+    novo->valor = valor_atual;
+
+    if(lista->tamanhoLista == 0)
+    {
+        novo->chaveAnterior = 0;
+        novo->chave = (valor_atual % id_atual ) + novo->chaveAnterior;
+        lista->primeiro = novo;
+        lista->ultimo = novo;
+        lista->tamanhoLista++;
+
+    }
+    else
+    {
+
+          while(aux != NULL)
+                {
+                    if(aux->ID == id_atual) { avanca = 1; }
+                        aux = aux->prox;
+                }
+
+        aux = lista->primeiro;
+
+        while(aux->prox != NULL )
+        {
+            aux = aux->prox;
+        }
+        if( avanca == 0)
+        {
+            novo->chaveAnterior = aux->chave;
+            novo->chave = (valor_atual % id_atual) + novo->chaveAnterior;
+            aux->prox = novo;
+            lista->ultimo = novo;
+            lista->tamanhoLista++;
+        }
+
+    }
+
+}
+
+void atualizar(Lista *lista)
+{
+    int id,valor;
+    elemento *aux = lista->primeiro;
+
+    scanf("%d %d", &id, &valor);
+
+    while(aux->prox != NULL)
+    {
+        if(aux->ID == id)
+            break;
+
+        aux = aux->prox;
+    }
+
+            aux->valor = aux->valor + valor;
+            elemento *aux2 = aux;
+
+
+            while(aux2->prox != NULL)
+            {
+
+                aux2->prox->chave = (aux2->prox->valor % aux2->prox->ID) + aux2->chave;
+                aux2->prox->chaveAnterior = aux2->chave;
+
+            aux2 = aux2->prox;
+
+            }
+
+}
+void remover(Lista *lista)
+{
+   int id;
+    elemento *aux  = lista->primeiro;
+    elemento *aux2 = lista->primeiro;
+    elemento *aux3 = lista->primeiro;
+
+    scanf("%d",&id);
+
+
+    if(lista->primeiro->ID == id )
+    {
+        aux2=aux->prox;
+        aux2->chaveAnterior = 0;
+        lista->primeiro = aux2;
+
+
+             while(aux2->prox != NULL)
+            {
+                aux2->prox->chave = (aux2->prox->valor % aux2->prox->ID) + aux2->chave;
+                aux2->prox->chaveAnterior = aux2->chave;
+                aux2 = aux2->prox;
+            }
+
+    }
+    else
+    {
+    while(aux->prox->ID != id)
+         aux = aux->prox;
+
+
+    while(aux3->prox != NULL)
+    {
+        if(aux3->ID == id)
+            break;
+            aux3 = aux3->prox;
+    }
+
+        aux->prox = aux3->prox;
+
+        if(aux3->prox != NULL){
+
+                aux2 = aux3->prox;
+        while(aux2->prox != NULL)
+            {
+
+                aux2->chave = (aux2->valor % aux2->ID) + aux->chave;
+                aux2->chaveAnterior = aux2->chave;
+
+            aux2 = aux2->prox;
+
+            }
+
+        }
+
+        else{
+
+            lista->ultimo = aux;
+        }
+
+        lista->tamanhoLista--;
+
+    }
+
+}
+void transferir(Lista *lista)
+{
+    int IDpaga,valor,IDrecebe;
+
+    scanf("%d %d %d", &IDpaga, &valor, &IDrecebe);
+
+    elemento *aux = lista->primeiro;
+
+    while(aux->prox != NULL)
+    {
+        if(aux->ID == IDpaga)
+            break;
+
+        aux = aux->prox;
+    }
+
+            aux->valor = aux->valor - valor;
+            elemento *aux2 = aux;
+
+
+            while(aux2->prox != NULL)
+            {
+
+                aux2->prox->chave = (aux2->prox->valor % aux2->prox->ID) + aux2->chave;
+                aux2->prox->chaveAnterior = aux2->chave;
+
+            aux2 = aux2->prox;
+
+            }
+
+            aux = lista->primeiro;
+
+    while(aux->prox != NULL)
+    {
+        if(aux->ID == IDrecebe)
+            break;
+
+        aux = aux->prox;
+    }
+
+            aux->valor = aux->valor + valor;
+            aux2 = aux;
+
+
+            while(aux2->prox != NULL)
+            {
+
+                aux2->prox->chave = (aux2->prox->valor % aux2->prox->ID) + aux2->chave;
+                aux2->prox->chaveAnterior = aux2->chave;
+
+            aux2 = aux2->prox;
+
+            }
+
+
+
+
+
+}
+
+void imprimir(Lista *lista)
+{
+
+elemento *aux = lista->primeiro;
+
+
+    while(aux != NULL)
+{
+            printf("id: %d | valor: %d | hashanterior: %d | hash: %d\n", aux->ID, aux->valor, aux->chaveAnterior ,aux->chave);
+            aux = aux->prox;
+
+}
+
+
+
+}
+
+
+int main()
+{
+    int op;
+
+    Lista lista;
+
+    inicializaLista(&lista);
+
+    scanf("%d", &op);
+    while( op != -1)
+    {
+
+   switch (op)
+   {
+       case 1:
+           inserir(&lista);
+       break;
+
+       case 2:
+           atualizar(&lista);
+       break;
+
+       case 3:
+           remover(&lista);
+        break;
+
+       case 4:
+           transferir(&lista);
+        break;
+
+        case 5:
+            imprimir(&lista);
+            break;
+   }
+   scanf("%d", &op);
+
+    }
+
+    return 0;
+}
