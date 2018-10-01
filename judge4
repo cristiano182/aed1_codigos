@@ -1,0 +1,93 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Elemento
+{
+    int cidadeID;
+    int distancia;
+
+    struct Elemento *prox;
+    struct Elemento *ant;
+
+}elemento;
+
+typedef struct lista
+{
+    elemento *primeiro;
+    elemento *ultimo;
+    int tamanhoLista;
+
+}Lista;
+
+void inicialiaLista()
+{
+    lista->primeiro = NULL;
+    lista->ultimo = NULL;
+    lista->tamanhoLista  = 0 ;
+
+}
+
+void quantoPercorri(Lista *lista)
+{
+
+
+}
+
+void quantoFalta(Lista *lista)
+{
+
+
+}
+void totalTrajeto (Lista *lista)
+{
+
+
+}
+int main ()
+{
+
+    int op = 1 ;
+    Lista lista;
+    inicialiaLista(&lista);
+
+
+while(op == 1)
+{
+ scanf("%d", &op);
+    switch(op)
+    {
+
+
+    case 1:
+       // scanf("%d %d", &IDcidade, &distancia);
+       // inserir(&lista);
+        break;
+
+    case 2:
+        //quantoPercorri(&lista);
+            op = 0;
+
+        break;
+
+    case 3:
+        //quantoFalta(&lista);
+        op = 0;
+        break;
+
+    case 4:
+       // totalTrajeto(&lista);
+       op = 0;
+        break;
+
+
+    default:
+        printf("opcao invalida");
+        break;
+
+    }
+
+
+}
+
+    return 0;
+}
