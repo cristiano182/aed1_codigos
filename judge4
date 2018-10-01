@@ -19,7 +19,7 @@ typedef struct lista
 
 }Lista;
 
-void inicialiaLista()
+void inicialiaLista(Lista *lista)
 {
     lista->primeiro = NULL;
     lista->ultimo = NULL;
@@ -29,20 +29,139 @@ void inicialiaLista()
 
 void quantoPercorri(Lista *lista)
 {
+    int x;
+    int km = 0;
+    int i=0;
+    elemento *aux = lista->primeiro;
+
+    scanf("%d",&x);
+
+    if(lista->ultimo->distancia != 0 )
+    {
+
+        printf("trajeto invalido\n");
+
+    }
+    else
+    {
+
+
+    while(aux->cidadeID != x)
+    {
+    km = km +  aux->distancia;
+    i++;
+    aux = aux->prox;
+    }
+
+    printf("estou na cidade: %d\n",x);
+    printf("ja percorri %d km, passando por %d cidades\n",km,i);
+
+    }
 
 
 }
 
 void quantoFalta(Lista *lista)
 {
+        int x = 0;
+        int km = 0;
+        int i = 0;
+        elemento *aux = lista->ultimo;
+
+        scanf("%d",&x);
+
+   if(lista->ultimo->distancia != 0 )
+    {
+
+        printf("trajeto invalido\n");
+
+    }
+    else
+    {
+
+
+    while(aux->cidadeID != x )
+    {
+
+    km = km + aux->distancia;
+    i++;
+
+        aux = aux->ant;
+    }
+
+    printf("estou na cidade %d:\n",x);
+    printf("faltam percorrer %d km, passando por %d cidades\n",i);
+
+
+    }
 
 
 }
 void totalTrajeto (Lista *lista)
 {
+    int km = 0;
+    int i = 0;
+
+    elemento *aux = lista->primeiro;
+
+   if(lista->ultimo->distancia != 0 )
+    {
+
+        printf("trajeto invalido\n");
+
+    }
+    else
+    {
+
+        while(aux != NULL)
+        {
+
+        km = km + aux->distancia;
+        aux = aux->prox;
+        }
+
+
+        printf("o trajeto total tem %d kms, passsando por %d cidades\n",km,lista->tamanhoLista);
+
+    }
+
 
 
 }
+void inserir(Lista *lista)
+{
+
+int IDcidade,distancia;
+elemento *novo = (elemento*)malloc(sizeof(elemento));
+scanf("%d %d", &IDcidade, &distancia);
+
+novo->cidadeID = IDcidade;
+novo->distancia = distancia;
+
+
+if(lista->tamanhoLista == 0)
+{
+
+novo->ant = NULL;
+novo->prox = NULL;
+
+lista->primeiro = novo;
+lista->ultimo = novo;
+}
+else
+{
+
+novo->prox = NULL;
+novo->ant = lista->ultimo;
+lista->ultimo->prox = novo;
+lista->ultimo = novo;
+
+}
+lista->tamanhoLista++;
+
+
+}
+
 int main ()
 {
 
@@ -59,23 +178,23 @@ while(op == 1)
 
 
     case 1:
-       // scanf("%d %d", &IDcidade, &distancia);
-       // inserir(&lista);
+       inserir(&lista);
         break;
 
     case 2:
-        //quantoPercorri(&lista);
+
+        quantoPercorri(&lista);
             op = 0;
 
         break;
 
     case 3:
-        //quantoFalta(&lista);
+        quantoFalta(&lista);
         op = 0;
         break;
 
     case 4:
-       // totalTrajeto(&lista);
+       totalTrajeto(&lista);
        op = 0;
         break;
 
