@@ -83,7 +83,7 @@ void quantoFalta(Lista *lista)
     }
     else
     {
-    printf("estou na cidade %d:\n",x);
+    printf("estou na cidade %d:\n",cidade);
     printf("faltam percorrer %d km,passando por %d cidades\n",i);
 
     }
