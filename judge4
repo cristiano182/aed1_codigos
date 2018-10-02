@@ -29,33 +29,31 @@ void inicialiaLista(Lista *lista)
 
 void quantoPercorri(Lista *lista)
 {
-    int x;
+    int cidade;
     int km = 0;
     int i=0;
     elemento *aux = lista->primeiro;
 
-    scanf("%d",&x);
+    scanf("%d",&cidade);
 
-    if(lista->ultimo->distancia != 0 )
-    {
-
-        printf("trajeto invalido\n");
-
-    }
-    else
-    {
-
-
-    while(aux->cidadeID != x)
+    while(aux != NULL)
     {
     km = km +  aux->distancia;
     i++;
+    if(aux->cidadeID == cidade)
+    break;
     aux = aux->prox;
     }
 
-    printf("estou na cidade: %d\n",x);
-    printf("ja percorri %d km, passando por %d cidades\n",km,i);
 
+    if(aux == NULL)
+    {
+        printf("cidade nao existe");
+    }
+    else
+    {
+    printf("estou na cidade %d:\n",cidade);
+    printf("ja percorri %d km, passando por %d cidades\n",km,i);
     }
 
 
@@ -63,38 +61,32 @@ void quantoPercorri(Lista *lista)
 
 void quantoFalta(Lista *lista)
 {
-        int x = 0;
+        int cidade;
         int km = 0;
         int i = 0;
+
         elemento *aux = lista->ultimo;
+        scanf("%d",&cidade);
 
-        scanf("%d",&x);
 
-   if(lista->ultimo->distancia != 0 )
+    while(aux != NULL )
     {
-
-        printf("trajeto invalido\n");
-
+    km = km + aux->distancia;
+    i++;
+    if(aux->cidadeID == cidade)
+    break;
+        aux = aux->ant;
+    }
+    if(aux == NULL)
+    {
+        printf("cidade nao existe");
     }
     else
     {
-
-
-    while(aux->cidadeID != x )
-    {
-
-    km = km + aux->distancia;
-    i++;
-
-        aux = aux->ant;
-    }
-
     printf("estou na cidade %d:\n",x);
-    printf("faltam percorrer %d km, passando por %d cidades\n",i);
-
+    printf("faltam percorrer %d km,passando por %d cidades\n",i);
 
     }
-
 
 }
 void totalTrajeto (Lista *lista)
@@ -104,40 +96,21 @@ void totalTrajeto (Lista *lista)
 
     elemento *aux = lista->primeiro;
 
-   if(lista->ultimo->distancia != 0 )
-    {
-
-        printf("trajeto invalido\n");
-
-    }
-    else
-    {
-
         while(aux != NULL)
         {
 
         km = km + aux->distancia;
+        i++;
         aux = aux->prox;
         }
-
-
-        printf("o trajeto total tem %d kms, passsando por %d cidades\n",km,lista->tamanhoLista);
-
-    }
-
-
-
+        printf("o trajeto total tem %d kms,passsando por %d cidades\n",km,i);
 }
-void inserir(Lista *lista)
+void inserir(Lista *lista, int IDcidade, int distancia)
 {
 
-int IDcidade,distancia;
 elemento *novo = (elemento*)malloc(sizeof(elemento));
-scanf("%d %d", &IDcidade, &distancia);
-
 novo->cidadeID = IDcidade;
 novo->distancia = distancia;
-
 
 if(lista->tamanhoLista == 0)
 {
@@ -164,49 +137,48 @@ lista->tamanhoLista++;
 
 int main ()
 {
-
-    int op = 1 ;
+    int op;
+    int IDcidade,distancia;
     Lista lista;
     inicialiaLista(&lista);
 
 
+scanf("%d",&op);
 while(op == 1)
 {
- scanf("%d", &op);
+scanf("%d %d",&IDcidade,&distancia);
+ inserir(&lista,IDcidade,distancia);
+ scanf("%d",&op);
+}
+
     switch(op)
     {
-
-
-    case 1:
-       inserir(&lista);
-        break;
-
     case 2:
-
+        if(distancia == 0)
         quantoPercorri(&lista);
-            op = 0;
-
+        else
+        printf("trajeto invalido");
         break;
 
     case 3:
+        if(distancia == 0)
         quantoFalta(&lista);
-        op = 0;
+        else
+        printf("trajeto invalido");
         break;
 
     case 4:
+       if(distancia == 0)
        totalTrajeto(&lista);
-       op = 0;
+       else
+        printf("trajeto invalido");
         break;
-
 
     default:
         printf("opcao invalida");
         break;
-
     }
 
-
-}
 
     return 0;
 }
