@@ -33,27 +33,24 @@ void quantoPercorri(Lista *lista)
     int km = 0;
     int i=0;
     elemento *aux = lista->primeiro;
-
     scanf("%d",&cidade);
 
     while(aux != NULL)
     {
-    km = km +  aux->distancia;
-    i++;
     if(aux->cidadeID == cidade)
-    break;
+        break;
+        km = km +  aux->distancia;
+        i++;
     aux = aux->prox;
     }
-
-
     if(aux == NULL)
     {
-        printf("cidade nao existe");
+        printf("cidade nao existe no percurso");
     }
     else
     {
     printf("estou na cidade %d:\n",cidade);
-    printf("ja percorri %d km, passando por %d cidades\n",km,i);
+    printf("ja percorri %d km,passando por %d cidades\n",km,i);
     }
 
 
@@ -63,28 +60,26 @@ void quantoFalta(Lista *lista)
 {
         int cidade;
         int km = 0;
-        int i = 0;
-
+        int i = -1;
         elemento *aux = lista->ultimo;
         scanf("%d",&cidade);
-
-
     while(aux != NULL )
     {
-    km = km + aux->distancia;
-    i++;
+
+         km = km + aux->distancia;
+        i++;
     if(aux->cidadeID == cidade)
     break;
         aux = aux->ant;
     }
     if(aux == NULL)
     {
-        printf("cidade nao existe");
+        printf("cidade nao existe no percurso");
     }
     else
     {
     printf("estou na cidade %d:\n",cidade);
-    printf("faltam percorrer %d km,passando por %d cidades\n",i);
+    printf("faltam percorrer %d km,passando por %d cidades\n",km,i);
 
     }
 
