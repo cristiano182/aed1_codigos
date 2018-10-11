@@ -1,0 +1,86 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Elemento{
+
+char nome;
+int agilidade;
+struct Elemento *prox;
+
+}elemento;
+
+typedef struct L{
+
+elemento *primeiro;
+int tamanho;
+
+}Lista;
+void inicializaLista(Lista *lista)
+{
+    lista->tamanho = 0;
+    lista->primeiro = (elemento*)malloc(sizeof(elemento));
+    lista->primeiro->prox = lista->primeiro;
+}
+
+void insercao (Lista *lista,char nome,int agilidade)
+{
+
+
+
+}
+void sorteia(Lista *lista, char nome)
+{
+
+
+
+}
+int verificaExiste (Lista *lista,char nome)
+{
+    elemento *aux = lista->primeiro->prox;
+
+    lista->primeiro->nome = nome;
+
+    while( aux->nome != lista->primeiro->nome) aux = aux->prox;
+
+
+    if(aux == lista->primeiro) return 0;
+
+    return 1;
+
+}
+int main()
+{
+    int op;
+    int existe = 0;
+    char nome;
+    int agilidade;
+    Lista lista;
+    inicializaLista(&lista);
+
+        scanf("%d", &op);
+            while(op==1)
+            {
+            scanf(" %c %d", &nome, &agilidade);
+
+                    existe = verificaExiste(&lista,nome);
+                    if(existe)
+                        insercao(&lista,nome,agilidade);
+                    else
+                    // não pode inserir novamente!
+
+             scanf("%d", &op);
+            }
+    if(op == 2 )
+    {
+        scanf(" %c", &nome);
+
+            existe = verificaExiste(&lista,nome);
+            if(existe)
+                sorteia(&lista,nome);
+            else
+                printf("soldado informado nao existe");
+
+    }
+
+    return 0;
+}
