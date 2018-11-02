@@ -1,0 +1,91 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Elemento
+{
+    int info;
+    struct Elemento *prox;
+
+}elemento;
+
+typedef struct F
+{
+    elemento *inicio;
+    elemento *fim;
+    int tamanho;
+
+}Fila;
+
+void inicializaFila(Fila *fila)
+{
+    fila->fim = NULL;
+    fila->inicio = NULL;
+    fila->tamanho = 0;
+}
+void imprimir(Fila *fila)
+{
+
+    elemento *aux = fila->inicio;
+
+    while(aux != NULL)
+    {
+
+        printf("%d \n", aux->info);
+
+        aux = aux->prox;
+    }
+
+}
+void inserir( Fila * fila)
+{
+
+    int info;
+
+    printf("Insira o valor: \n");
+    scanf("%d",&info);
+
+    elemento *novo = (elemento*)malloc(sizeof(elemento));
+
+    novo->info = info;
+    novo->prox = NULL;
+
+    if(fila->tamanho == 0)
+        fila->inicio = novo;
+    else
+        fila->fim->prox = novo;
+
+
+
+     fila->fim = novo;
+    fila->tamanho++;
+
+}
+void remover(Fila *fila)
+{
+    elemento  *aux = fila->inicio ;
+
+    if(fila->tamanho != 0)
+    {
+        aux = fila->inicio;
+        fila->inicio = fila->inicio->prox;
+
+        if(fila->inicio == NULL)
+            fila->fim == NULL;
+
+
+        fila->tamanho--;
+    }
+}
+
+int main()
+{
+
+    Fila fila;
+    inicializaFila(&fila);
+
+
+
+
+
+    return 0;
+}
