@@ -1,0 +1,86 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct elemento {
+ char nome;
+ struct elemento *ant;
+}Elemento;
+
+typedef struct{
+Elemento *topo1;
+Elemento *topo2;
+int tamanho;
+}Pilha;
+
+void inicilizar(Pilha *pilha)
+{
+   pilha->tamanho = 0;
+   pilha->topo1 = NULL;
+   pilha->topo2 = NULL;
+}
+
+void inserir(Pilha *pilha)
+{
+int i;
+char texto[100];
+gets(texto);
+int tamanho = strlen(texto);
+
+for(i = 0;  i <tamanho; i++)
+{
+
+if(i % 2 != 0)
+{
+Elemento *novo1 = (Elemento*)malloc(sizeof(Elemento));
+novo1->nome = texto[i];
+novo1->ant = pilha->topo1;
+pilha->topo1 = novo1;
+
+}
+else
+{
+Elemento *novo2 = (Elemento*)malloc(sizeof(Elemento));
+novo2->nome = texto[i];
+novo2->ant = pilha->topo2;
+pilha->topo2 = novo2;
+}
+pilha->tamanho++;
+
+}
+
+}
+void imprimir(Pilha *pilha)
+{
+Elemento *aux1 = pilha->topo1;
+Elemento *aux2 = pilha->topo2;
+int i;
+int tamanho = pilha->tamanho;
+for( i = 0; i <tamanho; i++)
+{
+
+    if(i % 2 == 0 )
+    {
+    printf("%c",aux2->nome);
+    aux2 = aux2->ant;
+    }
+    else
+    {
+    printf("%c",aux1->nome);
+    aux1 = aux1->ant;
+    }
+
+}
+
+}
+int main()
+{
+Pilha pilha;
+inicilizar(&pilha);
+
+inserir(&pilha);
+imprimir(&pilha);
+
+
+return 0;
+}
