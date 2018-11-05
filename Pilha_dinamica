@@ -1,0 +1,71 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct elemento
+{
+ int dado;
+ struct elemento *ant;
+}Elemento;
+
+typedef struct
+{
+Elemento *topo;
+int tamanho;
+}Pilha;
+
+void inicilizar(Pilha *pilha)
+{
+   pilha->topo = NULL;
+   pilha->tamanho = 0;
+}
+
+void inserir(Pilha *pilha)
+{
+int dado;
+Elemento *novo = (Elemento*)malloc(sizeof(Elemento));
+scanf("%d",&dado);
+
+novo->dado = dado;
+novo->ant = pilha->topo;
+pilha->topo = novo;
+pilha->tamanho++;
+}
+void remover(Pilha *pilha)
+{
+if(pilha->topo != NULL)
+{
+Elemento *aux = pilha->topo;
+pilha->topo = pilha->topo->ant;
+free(aux);
+}
+
+}
+void imprimir(Pilha *pilha)
+{
+Elemento *aux = pilha->topo;
+
+while(aux != NULL)
+{
+
+printf("dado-> %d\n",aux->dado);
+aux = aux->ant;
+}
+
+
+}
+int main()
+{
+
+Pilha pilha;
+inicilizar(&pilha);
+
+
+inserir(&pilha);
+inserir(&pilha);
+inserir(&pilha);
+imprimir(&pilha);
+
+
+
+return 0;
+}
