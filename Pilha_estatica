@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX 20
+
+typedef struct
+{
+int dados[MAX];
+int topo;
+
+}Pilha;
+void inicializa(Pilha *pilha)
+{
+    pilha->topo = -1;
+
+}
+void inserir(Pilha *pilha)
+{
+int dado;
+
+printf("Insira o valor: \n");
+scanf("%d",&dado);
+if(pilha->topo != MAX-1)
+{
+
+pilha->topo++;
+pilha->dados[pilha->topo] = dado;
+}
+
+}
+void excluir(Pilha *pilha)
+{
+
+if(pilha->topo != -1)
+{
+pilha->topo--;
+}
+
+}
+void numeroElementos(Pilha *pilha)
+{
+    printf("-%d- Elementos \n",pilha->topo+1);
+
+}
+void imprimir(Pilha *pilha)
+{
+    for(int i = pilha->topo; i>= 0; i--)
+    printf(" -> %d \n", pilha->dados[i]);
+
+}
+int main()
+{
+
+Pilha pilha;
+inicializa(&pilha);
+
+for(int i = 0; i<10; i++)
+{
+    inserir(&pilha);
+
+}
+
+imprimir(&pilha);
+numeroElementos(&pilha);
+return 0;
+}
