@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct noArvoreBinaria {
+char info;
+struct noArvoreBinaria* esq;
+struct noArvoreBinaria* dir;
+};
+typedef struct noArvoreBinaria tipoNoAB;
+
+
+void inicializa (char c, tipoNoAB *arvoreAux){
+arvoreAux->info = c;
+arvoreAux->esq = NULL;
+arvoreAux->dir=NULL; }
+
+tipoNoAB* insereNo ( char c ) {
+tipoNoAB* novo = malloc(sizeof(tipoNoAB));
+novo->info = c;
+novo->dir = NULL;
+novo->esq= NULL;
+return novo; }
+
+void imprime ( tipoNoAB *aux ){
+if (aux!= NULL)
+printf("%c", aux->info);
+if (aux->dir!= NULL)
+imprime(aux->dir);
+if (aux->esq!= NULL)
+imprime(aux->esq); }
+
+
+void insere( tipoNoAB *aux, char c)
+{
+
+    if(aux->dir == NULL)
+
+
+}
+
+
+int main()
+{
+    tipoNoAB *raiz = NULL;
+    int i;
+    char a;
+
+    while()
+
+
+    return 0;
+}
