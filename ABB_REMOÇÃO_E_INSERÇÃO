@@ -1,0 +1,146 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define true 1
+#define false 0
+typedef int bool;
+
+typedef struct aux
+{
+   int chave;
+   struct aux *esq;
+   struct aux *dir;
+}tipoABB;
+
+void inicializa(tipoABB *raiz, int chave)
+{
+    raiz->dir = NULL;
+    raiz->esq = NULL;
+    raiz->chave = chave;
+}
+
+
+tipoABB *criaNo(int chave)
+{
+    tipoABB *novo = (tipoABB*)malloc(sizeof(tipoABB));
+    novo->chave = chave;
+    novo->dir = NULL;
+    novo->esq = NULL;
+    return novo;
+}
+
+
+void insereABB(int chave, tipoABB *aux)
+{
+        if(chave  < aux->chave )
+        {
+            if(aux->esq == NULL)
+                aux->esq = criaNo(chave);
+            else
+                insereABB(chave, aux->esq);
+        }
+        else if(chave > aux->chave)
+        {
+            if(aux->dir == NULL)
+                aux->dir = criaNo(chave);
+            else
+                insereABB(chave,aux->dir);
+        }
+        else
+            printf("Elemento ja existe ! \n");
+}
+
+void imprimir(tipoABB *raiz)
+{
+
+    if(raiz == NULL)
+        return;
+
+    /* PRE-ORDEM */
+
+    printf("%d ",raiz->chave);
+    imprimir(raiz->esq);
+    imprimir(raiz->dir);
+
+
+     //imprimir(raiz->esq);
+     //printf("%d ",raiz->chave);
+     //imprimir(raiz->dir);
+
+
+     //imprimir(raiz->esq);
+     //imprimir(raiz->dir);
+     //printf("%d ",raiz->chave);
+
+}
+tipoABB* maiorValor(tipoABB *Aux)
+{
+    while(Aux->dir != NULL)
+        Aux = Aux->dir;
+
+    return Aux;
+}
+tipoABB* removeABB (tipoABB *Aux, int info){
+tipoABB *temp;
+
+if (Aux==NULL) // se Aux for NULL o nó a ser removido não existe na árvore
+return NULL;
+
+// iniciamos a busca pelo nó com o info/chave a ser removido
+else if (Aux->chave > info){
+Aux->esq = removeABB(Aux->esq, info);
+
+// continua na sub-árvore da esquerda
+} else if (Aux->chave < info){
+Aux->dir = removeABB(Aux->dir, info);
+
+// continua na sub-árvore da direita
+} else {
+if ((Aux->esq != NULL) && (Aux->dir!=NULL)){ // caso 3: tem 2 filhos
+temp = maiorValor(Aux->esq);
+
+// procura pelo maior chave da sub-árvore da esquerda
+Aux->chave = temp->chave;
+
+// realiza a troca de infos/chaves
+temp->chave = info;
+Aux->esq = removeABB(Aux->esq, info); // chama a remoção a partir do filho a esquerda de Aux,
+// passando o info do nó a ser removido
+//(que pode ser folha ou ter um filho a esquerda)
+}else if ((Aux->esq != NULL)){
+// caso 2a: só filho a esquerda
+temp = Aux;
+Aux = Aux->esq;
+free(temp);
+} else if ( Aux->dir!=NULL){ // caso 2b: só filho a direita
+temp = Aux;
+Aux = Aux->dir;
+free(temp);
+} else { // caso 1: nó folha (sem filhos, nem namorada, etc)
+free(Aux);
+return NULL;
+}
+}
+return Aux;
+}
+
+int main()
+{
+tipoABB *raiz;
+raiz = criaNo(10);
+insereABB( 3, raiz );
+insereABB( 7, raiz );
+insereABB( 4, raiz );
+insereABB( 1, raiz );
+insereABB( 2, raiz );
+insereABB( 8, raiz );
+insereABB( 12, raiz );
+insereABB( 11, raiz );
+imprimir(raiz);
+removeABB(raiz,10);
+printf("\n");
+imprimir(raiz);
+
+
+
+    return 0;
+}
