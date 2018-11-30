@@ -1,0 +1,159 @@
+        #include <stdio.h>
+        #include <stdlib.h>
+     
+     
+        typedef struct aux
+        {
+            int chave;
+            struct aux *esq;
+            struct aux *dir;
+        } tipoABB;
+     
+        tipoABB *criaNo(int chave)
+        {
+            tipoABB *novo = (tipoABB*)malloc(sizeof(tipoABB));
+            novo->chave = chave;
+            novo->dir = NULL;
+            novo->esq = NULL;
+            return novo;
+        }
+        void insereABB(int chave, tipoABB *aux)
+        {
+            if(chave  < aux->chave )
+            {
+                if(aux->esq == NULL)
+                    aux->esq = criaNo(chave);
+                else
+                    insereABB(chave, aux->esq);
+            }
+            else if(chave > aux->chave)
+            {
+                if(aux->dir == NULL)
+                    aux->dir = criaNo(chave);
+                else
+                    insereABB(chave,aux->dir);
+            }
+     
+        }
+        void imprimir(tipoABB *aux)
+        {
+            if(aux == NULL)
+                return;
+            imprimir(aux->esq);
+            printf("%d ",aux->chave);
+            imprimir(aux->dir);
+     
+        }
+        tipoABB* maiorValor(tipoABB *Aux)
+        {
+            tipoABB *temp = Aux;
+     
+            while(temp->dir != NULL)
+                temp = temp->dir;
+     
+            return temp;
+        }
+     
+        tipoABB* buscaABB (tipoABB *r, int k)
+        {
+     
+            if (r == NULL || r->chave == k)
+                return r;
+            if (r->chave > k)
+                return buscaABB(r->esq, k);
+            else
+                return buscaABB(r->dir, k);
+     
+        }
+     
+     
+        tipoABB *doisFilhos (tipoABB *raiz)
+        {
+            if(raiz == NULL)
+                return NULL;
+            else if (raiz->esq == NULL)
+                return raiz;
+            else
+                return doisFilhos(raiz->esq);
+     
+     
+        }
+        void removeNo(tipoABB **raiz, int elemento)
+        {
+     
+            if(elemento < (*raiz)->chave )
+                removeNo(&(*raiz)->esq,elemento);
+            else if ( elemento > (*raiz)->chave )
+                removeNo(&(*raiz)->dir, elemento);
+            else if ( (*raiz)->esq != NULL && (*raiz)->dir != NULL        )
+            {
+                tipoABB *aux = NULL;
+                aux = doisFilhos( (*raiz)->dir);
+                (*raiz)->chave = aux->chave;
+                removeNo(&(*raiz)->dir ,(*raiz)->chave);
+            }
+            else{
+     
+                tipoABB *aux = (*raiz);
+                if( (*raiz)->esq == NULL  )
+                    (*raiz) = (*raiz)->dir;
+                else
+                    *raiz = (*raiz)->esq;
+     
+                free(aux);
+     
+     
+            }
+     
+        }
+            int main()
+            {
+                tipoABB *raiz = NULL;
+                tipoABB *retornoBusca;
+                int op,i,chave;
+                char letra;
+     
+     
+                scanf("%d",&op);
+                for(i = 0; i < op; i++)
+                {
+                    scanf(" %c",&letra);
+     
+                    if(letra == 'I')
+                    {
+                        scanf("%d",&chave);
+     
+                        if (raiz == NULL)
+                            raiz = criaNo(chave);
+                        else
+                            insereABB(chave,raiz);
+                    }
+                    else if(letra == 'B')
+                    {
+                        scanf("%d",&chave);
+     
+                        retornoBusca = buscaABB(raiz,chave);
+     
+                        if(retornoBusca == NULL)
+                            printf("N\n");
+                        else
+                            printf("S\n");
+                    }
+                    else if (letra == 'M')
+                    {
+                        imprimir(raiz);
+                        printf("\n");
+                    }
+                    else if (letra == 'R')
+                    {
+     
+                        scanf("%d",&chave);
+     
+                        //raiz = removeABB(raiz,chave);
+                        removeNo(&raiz,chave);
+                    }
+     
+                }
+     
+                return 0;
+            }
