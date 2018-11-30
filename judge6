@@ -1,0 +1,142 @@
+        #include <stdio.h>
+        #include <stdlib.h>
+         
+        typedef struct Elemento {
+         int IDprocesso;
+         struct Elemento *prox;
+          }elemento;
+         
+        typedef struct FILA {
+        elemento *inicio;
+        elemento *fim;
+         int tamanho;
+         }Fila;
+         
+        void inicializar(Fila *fila) {
+        fila->fim = NULL;
+        fila->inicio = NULL;
+        fila->tamanho = 0;
+           }
+         
+        void imprimir(Fila *fila){
+         
+         elemento *aux = fila->inicio;
+         
+         int i;
+         if(fila->tamanho == 0)
+         {
+         printf("lista vazia");
+         }
+         else
+         {
+         
+            if(fila->tamanho == 1)
+            printf("|%d|",aux->IDprocesso);
+                else
+                {
+                     for(i = 0 ; i<fila->tamanho; i++)
+                     {
+                             if(i == 0)
+                             {
+                              printf("|%d->",aux->IDprocesso);
+                             }
+                             else if (i == (fila->tamanho - 1) )
+                             {
+                              printf("%d|",aux->IDprocesso);
+         
+                              }
+                              else
+                              {
+                                    printf("%d->",aux->IDprocesso);
+                              }
+                              aux = aux->prox;
+                      }
+                      printf("\n");
+         
+                }
+          }
+         
+          }
+          void inserir( Fila *fila) {
+         
+          int id,rep = 0; scanf("%d",&id);
+          elemento *novo = (elemento*)malloc(sizeof(elemento));
+           elemento *aux = fila->inicio;
+           novo->IDprocesso = id;
+           novo->prox = NULL;
+           if(fila->tamanho == 0) {
+           fila->inicio = novo;
+           fila->fim = novo;
+           fila->tamanho++; }
+           else {
+           while(aux != NULL) {
+            if(aux->IDprocesso == id) rep = 1; aux = aux->prox; }
+             if(rep == 0) { fila->fim->prox = novo;
+             fila->fim = novo; fila->tamanho++; }
+             else printf("processo ja esta na fila\n"); } }
+         
+         
+         
+             void remover(Fila *fila) {
+         
+              elemento *aux = fila->inicio;
+         
+              if(fila->tamanho != 0) {
+         
+              aux = fila->inicio;
+              fila->inicio = fila->inicio->prox;
+         
+               if(fila->inicio == NULL)
+               fila->fim == NULL;
+         
+         
+               fila->tamanho--;
+               free(aux);
+         
+               }
+         
+         
+               }
+         
+               int main() {
+         
+               int op,cont=0;
+               Fila fila;
+               inicializar(&fila);
+         
+               scanf("%d", &op);
+               while(op != -1) {
+         
+                if(op == 1)
+                { inserir(&fila);
+                    cont++;
+         
+                    if(cont == 3)
+                    {
+                        printf("removendo processo %d em espera a muito tempo...\n",fila.inicio->IDprocesso);
+                        remover(&fila);
+                        cont = 0;
+                    }
+         
+         
+                 }
+                else if (op == 2)
+                {
+                    remover(&fila);
+                   
+                 }
+                else if (op == 3)
+                 {
+                 imprimir(&fila);
+         
+                 }
+                else {
+                printf("opcao invalida");
+                 break;
+         
+                 }
+                scanf("%d",&op);
+                 }
+         
+                return 0;
+                }
