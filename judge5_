@@ -1,0 +1,198 @@
+    #include <stdio.h>
+        #include <stdlib.h>
+     
+        typedef struct Elemento{
+        char nome;
+        int agilidade;
+        struct Elemento *prox;
+        struct Elemento *ant;
+        }elemento;
+     
+        typedef struct lista{
+        elemento *primeiro;
+        int tamanho;
+        }Lista;
+     
+        void inicializaLista(Lista *lista)
+        {
+            lista->tamanho = 0;
+            lista->primeiro = NULL;
+        }
+     
+        void insercao(Lista *lista,char nome,int agilidade)
+        {
+            elemento *novo = (elemento*)malloc(sizeof(elemento));
+            //elemento *aux;
+            //int c;
+            novo->agilidade = agilidade;
+            novo->nome = nome;
+     
+            if(lista->tamanho == 0)
+            {
+                novo->prox = novo;
+                novo->ant = novo;
+                lista->primeiro = novo;
+            }
+            else
+            {
+                novo->prox = lista->primeiro;
+                novo->ant = lista->primeiro->ant;
+                lista->primeiro->ant->prox = novo;
+                lista->primeiro->ant = novo;
+     
+            }
+        lista->tamanho++;
+        }
+     
+        char remover(Lista *lista,int contagem,char *nome)
+        {
+        char removido;
+        int i = 1;
+        elemento *aux = lista->primeiro;
+     
+        while(aux->nome != *nome)
+        {
+           aux = aux->prox;
+        }
+        for( i = 1; i<= contagem; i++)
+        {
+            aux = aux->prox;
+        }
+     
+        removido = aux->nome;
+     
+        if(aux == lista->primeiro)
+        {
+        lista->primeiro->ant->prox = lista->primeiro->prox;
+        lista->primeiro->prox->ant = lista->primeiro->ant;
+        lista->primeiro = lista->primeiro->prox;
+        }
+        else
+        {
+            aux->ant->prox = aux->prox;
+            aux->prox->ant = aux->ant;
+     
+        }
+        *nome = aux->prox->nome;
+        free(aux);
+        lista->tamanho--;
+        return removido;
+        }
+     
+    int pRand(int x){
+    int y;
+     
+    y = rand() % 10;
+     
+     
+    return y;
+    }
+     
+        void sorteia(Lista *lista, char nome)
+        {
+        int contagem;
+        int rodada = 1;
+        char removido;
+        printf("|| sorteio iniciado ||\n");
+     
+        while(lista->tamanho != 1)
+        {
+            contagem = pRand(rodada);
+     
+        printf("-> rodada %d: soldado %c, contagem %d\n", rodada, nome, contagem);
+        exibirLista(lista);
+        removido = remover(lista,contagem,&nome);
+        printf("removido: soldado %c\n", removido);
+     
+        rodada++;
+        }
+     
+        if( lista->primeiro->agilidade >= 7)
+            printf("soldado %c escolhido e vai nos salvar!\n",lista->primeiro->nome);
+     
+        else
+           printf("soldado %c escolhido - ele nao tem agilidade suficiente -> vamos morrer!!\n",lista->primeiro->nome);
+     
+        }
+        int verificaExiste (Lista *lista, char nome)
+        {
+     
+            int retorno = 1;
+            int i=0;
+            if(lista->primeiro != NULL)
+            {
+            elemento *aux = lista->primeiro;
+     
+            while( i < lista->tamanho)
+            {
+                if(aux->nome == nome)
+                    retorno = 0;
+     
+                aux = aux->prox;
+                 i++;
+            }
+     
+            }
+     
+     
+                return retorno;
+        }
+        void exibirLista(Lista *lista)
+        {
+            int i = 0;
+            elemento *aux = lista->primeiro;
+     
+     
+            while(i < lista->tamanho)
+            {
+                if(aux->prox == lista->primeiro)
+                    printf("soldado: %c |\n",aux->nome);
+     
+                else if(aux == lista->primeiro)
+                    printf("| soldado: %c -> ", aux->nome);
+     
+               else
+                    printf("soldado: %c -> ",aux->nome);
+     
+                aux = aux->prox;
+                i++;
+            }
+     
+        }
+        int main()
+        {
+            int op;
+            int existe = 0;
+            char nome;
+            int agilidade;
+            Lista lista;
+            inicializaLista(&lista);
+     
+                scanf("%d",&op);
+                    while(op==1)
+                    {
+                    scanf("%s",&nome);
+                    scanf("%d",&agilidade);
+                           existe = verificaExiste(&lista,nome);
+                           if(existe == 1)
+                               insercao(&lista,nome,agilidade);
+                            else
+                                printf("soldado nao pode ser inserido duas vezes\n");
+     
+                     scanf("%d", &op);
+                    }
+            if(op == 2 )
+            {
+                if(lista.tamanho == 0) printf("grupo vazio\n");
+                else {
+     
+                    scanf("%s", &nome);
+                    existe = verificaExiste(&lista,nome);
+     
+                    if(existe == 0) sorteia(&lista,nome);
+                    else  printf("soldado nao pertence ao grupo\n");
+                }
+            }
+     
+        return 0;
+        }
