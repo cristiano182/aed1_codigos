@@ -2,158 +2,161 @@
         #include <stdlib.h>
      
      
-        typedef struct aux
-        {
-            int chave;
-            struct aux *esq;
-            struct aux *dir;
-        } tipoABB;
      
-        tipoABB *criaNo(int chave)
-        {
-            tipoABB *novo = (tipoABB*)malloc(sizeof(tipoABB));
-            novo->chave = chave;
-            novo->dir = NULL;
-            novo->esq = NULL;
-            return novo;
-        }
-        void insereABB(int chave, tipoABB *aux)
-        {
-            if(chave  < aux->chave )
-            {
-                if(aux->esq == NULL)
-                    aux->esq = criaNo(chave);
-                else
-                    insereABB(chave, aux->esq);
-            }
-            else if(chave > aux->chave)
-            {
-                if(aux->dir == NULL)
-                    aux->dir = criaNo(chave);
-                else
-                    insereABB(chave,aux->dir);
-            }
+                typedef struct aux
+                {
+                   int chave;
+                   struct aux *esq;
+                   struct aux *dir;
+                }tipoABB;
      
-        }
-        void imprimir(tipoABB *aux)
-        {
-            if(aux == NULL)
-                return;
-            imprimir(aux->esq);
-            printf("%d ",aux->chave);
-            imprimir(aux->dir);
+                tipoABB *criaNo(int chave)
+                {
+                    tipoABB *novo = (tipoABB*)malloc(sizeof(tipoABB));
+                    novo->chave = chave;
+                    novo->dir = NULL;
+                    novo->esq = NULL;
+                    return novo;
+                }
+                void insereABB(int chave, tipoABB *aux)
+                {
+                        if(chave  < aux->chave )
+                        {
+                            if(aux->esq == NULL)
+                                aux->esq = criaNo(chave);
+                            else
+                                insereABB(chave, aux->esq);
+                        }
+                        else if(chave > aux->chave)
+                        {
+                            if(aux->dir == NULL)
+                                aux->dir = criaNo(chave);
+                            else
+                                insereABB(chave,aux->dir);
+                        }
      
-        }
-        tipoABB* maiorValor(tipoABB *Aux)
-        {
-            tipoABB *temp = Aux;
+                }
+                void imprimir(tipoABB *aux)
+                {
+                    if(aux == NULL)
+                        return;
+                     imprimir(aux->esq);
+                     printf("%d ",aux->chave);
+                     imprimir(aux->dir);
      
-            while(temp->dir != NULL)
-                temp = temp->dir;
+                }
+                tipoABB* maiorValor(tipoABB *aux)
+                {
      
-            return temp;
-        }
+                    while(aux->dir != NULL)
+                        aux = aux->dir;
      
-        tipoABB* buscaABB (tipoABB *r, int k)
-        {
+                    return aux;
+                }
+                tipoABB* removeABB (tipoABB *Aux, int info){
      
-            if (r == NULL || r->chave == k)
-                return r;
-            if (r->chave > k)
-                return buscaABB(r->esq, k);
-            else
-                return buscaABB(r->dir, k);
+                tipoABB *temp;
+                            if (Aux == NULL)
+                            return NULL;
+                            else if (Aux->chave > info) {
+                            Aux->esq = removeABB(Aux->esq, info);
+                                                        }
+                                else if (Aux->chave < info) {
+                            Aux->dir = removeABB(Aux->dir, info);
+                                                            }
+                            else {
+                            if ((Aux->esq != NULL) && (Aux->dir!=NULL))  {
+                            temp = maiorValor(Aux->esq);
+                            Aux->chave = temp->chave;
+                            temp->chave = info;
+                            Aux->esq = removeABB(Aux->esq, info);
+                                                                        }
+                            else if ((Aux->esq != NULL)) {
+                            temp = Aux;
+                            Aux = Aux->esq;
+                            free(temp);
+                                                        }
+                            else if ( Aux->dir!=NULL) {
+                            temp = Aux;
+                            Aux = Aux->dir;
+                            free(temp);
+                                                    }
+                                    else {
+                                    free(Aux);
+                                    return NULL;
+                                        }
+                            }
      
-        }
+                            return Aux;
+                }
+     
+                    void buscaABB(tipoABB *aux,int chave)
+                {
+                        if(aux == NULL)
+                        {
+                            printf("N\n");
+                             return;
+                        }
+                        else if(aux->chave < chave)
+                        {
+                            buscaABB(aux->dir,chave);
+                        }
+                        else if(aux->chave > chave)
+                        {
+                            buscaABB(aux->esq,chave);
+     
+                        }
+                        else
+                            {
+                                printf("S\n");
+                                return;
+                            }
      
      
-        tipoABB *doisFilhos (tipoABB *raiz)
-        {
-            if(raiz == NULL)
-                return NULL;
-            else if (raiz->esq == NULL)
-                return raiz;
-            else
-                return doisFilhos(raiz->esq);
-     
-     
-        }
-        void removeNo(tipoABB **raiz, int elemento)
-        {
-     
-            if(elemento < (*raiz)->chave )
-                removeNo(&(*raiz)->esq,elemento);
-            else if ( elemento > (*raiz)->chave )
-                removeNo(&(*raiz)->dir, elemento);
-            else if ( (*raiz)->esq != NULL && (*raiz)->dir != NULL        )
-            {
-                tipoABB *aux = NULL;
-                aux = doisFilhos( (*raiz)->dir);
-                (*raiz)->chave = aux->chave;
-                removeNo(&(*raiz)->dir ,(*raiz)->chave);
-            }
-            else{
-     
-                tipoABB *aux = (*raiz);
-                if( (*raiz)->esq == NULL  )
-                    (*raiz) = (*raiz)->dir;
-                else
-                    *raiz = (*raiz)->esq;
-     
-                free(aux);
-     
-     
-            }
-     
-        }
-            int main()
-            {
+                }
+                int main()
+                {
                 tipoABB *raiz = NULL;
-                tipoABB *retornoBusca;
                 int op,i,chave;
                 char letra;
      
-     
                 scanf("%d",&op);
-                for(i = 0; i < op; i++)
+               while(i < op)
                 {
                     scanf(" %c",&letra);
      
-                    if(letra == 'I')
-                    {
+                    if(letra == 'I'|| letra == 'B' || letra == 'R')
                         scanf("%d",&chave);
      
+                    if(letra == 'I')
+                       {
+                           i++;
                         if (raiz == NULL)
                             raiz = criaNo(chave);
+     
                         else
-                            insereABB(chave,raiz);
-                    }
+                        insereABB(chave,raiz);
+                       }
                     else if(letra == 'B')
                     {
-                        scanf("%d",&chave);
+                        i++;
+                        buscaABB(raiz,chave);
      
-                        retornoBusca = buscaABB(raiz,chave);
-     
-                        if(retornoBusca == NULL)
-                            printf("N\n");
-                        else
-                            printf("S\n");
                     }
                     else if (letra == 'M')
                     {
+                        i++;
                         imprimir(raiz);
                         printf("\n");
+     
                     }
                     else if (letra == 'R')
                     {
-     
-                        scanf("%d",&chave);
-     
-                        //raiz = removeABB(raiz,chave);
-                        removeNo(&raiz,chave);
+                        i++;
+                        raiz = removeABB(raiz,chave);
                     }
      
                 }
      
-                return 0;
-            }
+                    return 0;
+                }
